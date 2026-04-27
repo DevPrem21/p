@@ -1,38 +1,35 @@
-AIM
-To implement an autoencoder neural network for learning compressed representations and reconstructing input data.
+from tensorflow import keras
+from tensorflow.keras import layers
+import numpy as np
+import matplotlib.pyplot as plt
 
+(x_train, _), (x_test, _) = keras.datasets.mnist.load_data()
 
-THEORY
-An autoencoder is an unsupervised neural network used to learn efficient representations of input data without using labeled outputs. It is mainly designed to compress input data and reconstruct it accurately.
+x_train = x_train / 255.0
+x_test = x_test / 255.0
 
-Architecture
-An autoencoder has two parts:
+x_train = x_train.reshape(-1, 784)
+x_test = x_test.reshape(-1, 784)
 
-Encoder: Compresses input into a lower-dimensional latent space (encoding) by extracting important features.
-Decoder: Reconstructs the original input from the encoded representation.
-Applications
-Autoencoders are used for:
+input_img = keras.Input(shape=(784,))
+encoded = layers.Dense(128, activation='relu')(input_img)
+latent = layers.Dense(2, activation='relu')(encoded)
+decoded = layers.Dense(128, activation='relu')(latent)
+output = layers.Dense(784, activation='sigmoid')(decoded)
 
-Dimensionality reduction
-Image denoising
-Feature extraction
-Anomaly detection
+autoencoder = keras.Model(input_img, output)
+autoencoder.compile(optimizer='adam', loss='mse')
 
-WORKING OF AUTOENCODER (Step-wise)
-Step 1: Input data is given to the network.
+autoencoder.fit(x_train, x_train, epochs=5, batch_size=256)
 
-Step 2: Encoder compresses it into a latent space representation.
+decoded_imgs = autoencoder.predict(x_test)
 
-Step 3: Important features are preserved during compression.
+i = np.random.randint(0, len(x_test))
 
-Step 4: Decoder takes the encoded data.
+plt.subplot(1,2,1)
+plt.imshow(x_test[i].reshape(28,28), cmap='gray')
 
-Step 5: Decoder reconstructs the original input.
+plt.subplot(1,2,2)
+plt.imshow(decoded_imgs[i].reshape(28,28), cmap='gray')
 
-Step 6: Output is compared with original input.
-
-Step 7: Model is trained by minimizing reconstruction error.
-
-
-CONCLUSION
-Hence, the autoencoder successfully learns a compressed representation of input data and reconstructs it effectively while preserving important features.
+plt.show()
