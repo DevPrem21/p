@@ -28,8 +28,10 @@ i = np.random.randint(0, len(x_test))
 
 plt.subplot(1,2,1)
 plt.imshow(x_test[i].reshape(28,28), cmap='gray')
+plt.title("Original")  
 
 plt.subplot(1,2,2)
 plt.imshow(decoded_imgs[i].reshape(28,28), cmap='gray')
+plt.title("Reconstructed")  
 
 plt.show()
