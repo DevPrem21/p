@@ -1,37 +1,89 @@
-from tensorflow import keras
-from tensorflow.keras import layers
-import numpy as np
-import matplotlib.pyplot as plt
+import java.util.*;
 
-(x_train, _), (x_test, _) = keras.datasets.mnist.load_data()
+public class Load {
 
-x_train = x_train / 255.0
-x_test = x_test / 255.0
+    static void printLoad(int servers, int processes) {
 
-x_train = x_train.reshape(-1, 784)
-x_test = x_test.reshape(-1, 784)
+        if (servers <= 0) {
+            System.out.println("No servers available!");
+            return;
+        }
 
-input_img = keras.Input(shape=(784,))
-encoded = layers.Dense(128, activation='relu')(input_img)
-latent = layers.Dense(2, activation='relu')(encoded)
-decoded = layers.Dense(128, activation='relu')(latent)
-output = layers.Dense(784, activation='sigmoid')(decoded)
+        int each = processes / servers;
+        int extra = processes % servers;
 
-autoencoder = keras.Model(input_img, output)
-autoencoder.compile(optimizer='adam', loss='mse')
+        int i = 0;
 
-autoencoder.fit(x_train, x_train, epochs=5, batch_size=256)
+        for (i = 0; i < extra; i++) {
+            System.out.println("Server " + (i + 1) + " has " + (each + 1) + " Processes");
+        }
 
-decoded_imgs = autoencoder.predict(x_test)
+        for (; i < servers; i++) {
+            System.out.println("Server " + (i + 1) + " has " + each + " Processes");
+        }
+    }
 
-i = np.random.randint(0, len(x_test))
+    public static void main(String[] args) {
 
-plt.subplot(1,2,1)
-plt.imshow(x_test[i].reshape(28,28), cmap='gray')
-plt.title("Original")  
+        Scanner sc = new Scanner(System.in);
 
-plt.subplot(1,2,2)
-plt.imshow(decoded_imgs[i].reshape(28,28), cmap='gray')
-plt.title("Reconstructed")  
+        System.out.print("Enter the number of Servers: ");
+        int servers = sc.nextInt();
 
-plt.show()
+        System.out.print("Enter the number of Processes: ");
+        int processes = sc.nextInt();
+
+        while (true) {
+
+            System.out.println("\n--- Current Load Distribution ---");
+            printLoad(servers, processes);
+
+            System.out.println("\n1. Add Servers");
+            System.out.println("2. Remove Servers");
+            System.out.println("3. Add Processes");
+            System.out.println("4. Remove Processes");
+            System.out.println("5. Exit");
+
+            int choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("How many servers to add? ");
+                    servers += sc.nextInt();
+                    break;
+
+                case 2:
+                    System.out.print("How many servers to remove? ");
+                    servers -= sc.nextInt();
+                    if (servers < 1) {
+                        System.out.println("Servers cannot be less than 1!");
+                        servers = 1;
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("How many processes to add? ");
+                    processes += sc.nextInt();
+                    break;
+
+                case 4:
+                    System.out.print("How many processes to remove? ");
+                    processes -= sc.nextInt();
+                    if (processes < 0) {
+                        System.out.println("Processes cannot be negative!");
+                        processes = 0;
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+}
