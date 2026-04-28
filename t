@@ -1,33 +1,23 @@
-AIM
-To implement an autoencoder neural network for learning compressed representations and reconstructing input data.
-
-THEORY
-An autoencoder is an unsupervised neural network used to learn efficient representations of input data without using labeled outputs. 
-It is mainly designed to compress input data and reconstruct it accurately.
-
-Architecture
-An autoencoder has two parts:
-
-Encoder: Compresses input into a lower-dimensional latent space (encoding) by extracting important features.
-Decoder: Reconstructs the original input from the encoded representation.
-Applications
-Autoencoders are used for:
-
-Dimensionality reduction
-Image denoising
-Feature extraction
-Anomaly detection
-
-WORKING OF AUTOENCODER (Step-wise)
-Step 1: Input data is given to the network.
-Step 2: Encoder compresses it into a latent space representation.
-Step 3: Important features are preserved during compression.
-Step 4: Decoder takes the encoded data.
-Step 5: Decoder reconstructs the original input.
-Step 6: Output is compared with original input.
-Step 7: Model is trained by minimizing reconstruction error.
+To implement a program that demonstrates load balancing 
+by distributing processes evenly among available servers in a distributed system.
 
 
-CONCLUSION
-Hence, the autoencoder successfully learns a compressed representation of input data and 
-reconstructs it effectively while preserving important features.
+Theory 
+Load balancing is a technique used in distributed systems to distribute workload 
+evenly across multiple servers. This improves system performance, efficiency, and resource utilization.
+
+In this approach:
+
+The total number of processes is divided among servers.
+Each server gets an equal number of processes.
+If processes are not equally divisible, extra processes are distributed one by one to the first few servers.
+Formula used:
+
+Each server load = processes / servers
+Extra load = processes % servers
+This ensures fair and efficient distribution of tasks.
+
+Conclusion 
+The program successfully demonstrates load balancing by distributing processes 
+equally among servers. It ensures efficient utilization of resources and 
+improves system performance in a distributed environment
