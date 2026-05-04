@@ -1,23 +1,41 @@
-To implement a program that demonstrates load balancing 
-by distributing processes evenly among available servers in a distributed system.
+Aim
+To perform sentiment analysis on customer reviews using text analytics techniques
+and classify them into positive, negative, and neutral categories, and visualize the results.
 
+Theory
+Social media platforms generate a large amount of unstructured data such as customer reviews and comments.
+This data can be analyzed using text analytics techniques to extract useful insights.
 
-Theory 
-Load balancing is a technique used in distributed systems to distribute workload 
-evenly across multiple servers. This improves system performance, efficiency, and resource utilization.
+Text Analytics:
+It is the process of converting unstructured text data into meaningful information using Natural Language Processing (NLP).
 
-In this approach:
+Sentiment Analysis:
+It classifies text into:
+Positive
+Negative
+Neutral
 
-The total number of processes is divided among servers.
-Each server gets an equal number of processes.
-If processes are not equally divisible, extra processes are distributed one by one to the first few servers.
-Formula used:
+Text Preprocessing:
+Before analysis, text data is cleaned using:
+Tokenization (splitting text into words)
+Stop-word removal (removing common words like “is”, “the”)
+Lowercasing
 
-Each server load = processes / servers
-Extra load = processes % servers
-This ensures fair and efficient distribution of tasks.
+Sentiment Classification:
+In this experiment, sentiment is determined using the polarity score from TextBlob:
+Polarity > 0 → Positive
+Polarity < 0 → Negative
+Polarity ≈ 0 → Neutral
 
-Conclusion 
-The program successfully demonstrates load balancing by distributing processes 
-equally among servers. It ensures efficient utilization of resources and 
-improves system performance in a distributed environment
+Visualization:
+Bar chart is used to show sentiment distribution
+WordCloud is used to display frequently occurring words
+
+Procedure
+Collect customer review data
+Create dataset using Python
+Perform text preprocessing (tokenization, stop-word removal)
+Apply sentiment analysis using TextBlob
+Classify reviews into positive, negative, and neutral
+Visualize sentiment distribution using a bar chart
+Generate WordCloud for important words
